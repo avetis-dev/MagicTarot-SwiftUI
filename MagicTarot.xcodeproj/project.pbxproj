@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8B55BAA12F3566F7005CDBF3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8B55BAA02F3566EE005CDBF3 /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		8B48195B2F33F62E003D9751 /* MagicTarot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MagicTarot.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B55BAA02F3566EE005CDBF3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		8B4819522F33F62E003D9751 = {
 			isa = PBXGroup;
 			children = (
+				8B55BAA02F3566EE005CDBF3 /* README.md */,
 				8B48195D2F33F62E003D9751 /* MagicTarot */,
 				8B48195C2F33F62E003D9751 /* Products */,
 			);
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B55BAA12F3566F7005CDBF3 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
