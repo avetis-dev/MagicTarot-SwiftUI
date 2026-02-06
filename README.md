@@ -1,54 +1,83 @@
 # 🔮 Magic Tarot App
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Swift-5.9-orange.svg" />
-  <img src="https://img.shields.io/badge/Platform-iOS%2017-lightgrey.svg" />
+  <img src="https://img.shields.io/badge/Swift-5.9-F05138.svg?logo=swift&logoColor=white" />
+  <img src="https://img.shields.io/badge/SwiftUI-Framework-0071E3.svg?logo=apple&logoColor=white" />
+  <img src="https://img.shields.io/badge/iOS-17+-000000.svg?logo=apple&logoColor=white" />
   <img src="https://img.shields.io/badge/Architecture-MVVM-blue.svg" />
+  <img src="https://img.shields.io/badge/Status-In%20Development-yellow.svg" />
 </div>
 
 <br />
 
-**Magic Tarot** is a mystical iOS application built with **SwiftUI** designed to bring digital tarot readings to life.  
-The app combines traditional card meanings with modern animations and clean architecture.
+<div align="center">
+  <h3>✨ A mystical tarot reading experience built entirely in SwiftUI ✨</h3>
+</div>
 
-> *"The cards don't predict the future, they help you create it."*
+<br />
+
+> *"The cards don't predict the future — they help you create it."*
+
+---
+
+## 📖 About
+
+**Magic Tarot** is a beautifully designed iOS application that brings tarot 
+card readings to your iPhone. Built from scratch using **SwiftUI**, 
+the app features realistic card animations, multiple spread layouts, 
+and a carefully crafted mystical atmosphere.
+
+🎯 **Goal:** Publish on the App Store and demonstrate clean, modern iOS development skills.
+
 
 ---
 
-## 📱 Features (Implemented)
+## 📱 Features
 
-### ✅ Core Functionality
-- **Card of the Day:** Pull a random card with a 3D flip animation.
-- **Three-Card Spread:** A dedicated layout for "Past / Present / Future" readings.
-- **Smart Data Model:** Custom `TarotCard` struct with images, descriptions, and color coding.
+### 🃏 Card Readings
+| Feature | Description |
+|---------|-------------|
+| **Card of the Day** | Pull a random tarot card with a realistic 3D flip animation |
+| **Three-Card Spread** | "Past / Present / Future" reading layout |
+| **Full Major Arcana** | All 22 Major Arcana cards with descriptions and unique colors |
 
-### 🎨 UI/UX
-- **Modern Home Screen:** Clean navigation using `NavigationStack`.
-- **Animations:** Custom `rotation3DEffect` for realistic card flipping.
-- **Adaptive Layout:** Uses `ZStack`, `VStack`, and `Grid` layouts for responsive design.
-- **Loading States:** Simulated "AI Thinking" process with loading indicators.
+### 🎨 Design & UI
+| Feature | Description |
+|---------|-------------|
+| **Mystical Atmosphere** | Dark gradient backgrounds with animated star particles |
+| **3D Card Flip** | Smooth `rotation3DEffect` animation for card reveals |
+| **Glass Morphism** | Modern `.ultraThinMaterial` effects on card placeholders |
+| **Responsive Layout** | Adaptive design using `ZStack`, `VStack`, `HStack` |
 
-### 🛠 Technical Highlights
-- **SwiftUI Lifecycle:** Pure SwiftUI app structure (`App` protocol).
-- **Clean Code:** Reusable components (e.g., `CardPlaceholder` View).
-- **Navigation:** Deep linking and sheet presentation logic.
+### 🛠 Technical
+| Feature | Description |
+|---------|-------------|
+| **Pure SwiftUI** | No UIKit dependencies, 100% SwiftUI lifecycle |
+| **Clean Architecture** | Reusable components (`CardPlaceholder`, `StarsBackground`) |
+| **Smart Navigation** | `NavigationStack` + `sheet(item:)` with enum-based routing |
+| **Custom Data Model** | `Identifiable` TarotCard struct with type-safe properties |
 
 ---
+
 
 ## 📸 Screenshots
-*(Coming soon... You can add screenshots of your simulator here later!)*
 
-| Home Screen | Card Flip | Spread Layout |
-|:---:|:---:|:---:|
-![Spread Layout](Screenshots/spread_screen1.png) ![Spread Layout](Screenshots/spread_screen2.png) ![Spread Layout](Screenshots/spread_screen3.png)
+<div align="center">
+
+| Home Screen | Card Selection | Three-Card Spread |
+|:-----------:|:--------------:|:-----------------:|
+| <img src="Screenshots/spread_screen1.png" width="200"/> | <img src="Screenshots/spread_screen2.png" width="200"/> | <img src="Screenshots/spread_screen3.png" width="200"/> |
+
+</div>
 
 ---
 
 ## 🚀 Roadmap (Next Steps)
-- [ ] Connect OpenAI API for personalized interpretations.
-- [ ] Add full deck of 78 cards.
-- [ ] Implement "Save Reading" feature using SwiftData / CoreData.
-- [ ] Add Haptic Feedback (vibrations) for better immersion.
+### Phase 1 — MVP ✅
+- [x] Card of the Day with 3D animation
+- [x] Three-Card Spread layout
+- [x] Full Major Arcana deck (22 cards)
+- [x] Mystical UI with gradients and stars
 
 ---
 
@@ -60,4 +89,3 @@ Aspiring iOS Developer based in Warsaw 🇵🇱
 
 ---
 *Created as part of my journey from Hospitality to Tech.* 🚀
-
