@@ -40,7 +40,7 @@ The app combines traditional card meanings with modern animations and clean arch
 
 | Home Screen | Card Flip | Spread Layout |
 |:---:|:---:|:---:|
-| 🔜 | 🔜 | 🔜 |
+![Spread Layout](Screenshots/spread_screen1.png) ![Spread Layout](Screenshots/spread_screen2.png) ![Spread Layout](Screenshots/spread_screen3.png)
 
 ---
 
