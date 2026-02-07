@@ -39,7 +39,7 @@ struct CardPlaceholder: View {
                                 VStack(spacing: 8) {
                                     Image(systemName: "plus.circle")
                                         .font(.title)
-                                    Text("Wybrać")
+                                    Text("Wybierz")
                                         .font(.caption2)
                                 }
                                     .foregroundStyle(.white.opacity(0.5))
