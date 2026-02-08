@@ -11,14 +11,14 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.blue.ignoresSafeArea()
+                MysticBackground()
                 VStack {
                     Text("Magic Tarot")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundStyle(Color.white)
                     Spacer()
-                    NavigationLink(destination: ContentView()) {
+                    NavigationLink(destination: OneCardView()) {
                         Text("Karta Dnia")
                             .frame(width: 250,height: 50)
                             .background(Color.yellow)
