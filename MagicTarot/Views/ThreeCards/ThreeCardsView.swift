@@ -77,23 +77,39 @@ struct ThreeCardsView: View {
     }
     private var bottomSection: some View {
         VStack(spacing: 12) {
-            // Кнопка "Посмотреть расклад"
-            NavigationLink(destination: ReadingResultView()) {
+            if vm.allCardsSelected {
+                NavigationLink(
+                    destination: ReadingResultView(
+                        result: .threeCards(
+                            past: vm.pastCard!,
+                            present: vm.presentCard!,
+                            future: vm.futureCard!
+                        )
+                    )
+                ) {
+                    HStack {
+                        Image(systemName: "sparkles")
+                        Text("Sprawdź rozkład")
+                    }
+                    .font(.headline)
+                    .foregroundStyle(.black)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(Color.yellow)
+                    .cornerRadius(15)
+                }
+            }else {
                 HStack {
                     Image(systemName: "sparkles")
                     Text("Sprawdź rozkład")
                 }
                 .font(.headline)
-                .foregroundStyle(vm.allCardsSelected ? .black : .gray)
+                .foregroundStyle(.gray)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
-                .background(vm.allCardsSelected ? Color.yellow : Color.gray.opacity(0.3))
+                .background(Color.gray.opacity(0.3))
                 .cornerRadius(15)
             }
-            .disabled(!vm.allCardsSelected)
-            .animation(.easeInOut(duration: 0.3), value: vm.allCardsSelected)
-            
-            // Кнопка "Новый расклад"
             if vm.hasAnyCard {
                 Button {
                     withAnimation(.spring(duration: 0.5)) {

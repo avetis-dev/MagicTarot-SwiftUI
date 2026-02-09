@@ -9,22 +9,47 @@ struct CategoryCircle: View {
         Button(action: action) {
             VStack(spacing: 8) {
                 ZStack {
+                    if isSelected {
+                        Circle()
+                            .fill(category.color.opacity(0.3))
+                            .frame(width: 75, height: 75)
+                            .blur(radius: 10)
+                    }
+                    Circle()
+                        .fill(.ultraThinMaterial)
+                        .frame(width: 65, height: 65)
                     Circle()
                         .fill(
-                            isSelected
-                            ? category.color.opacity(0.3)
-                            : Color.white.opacity(0.1)
+                            LinearGradient(
+                                colors: isSelected
+                                ? [category.color.opacity(0.4), category.color.opacity(0.15)]
+                                : [.white.opacity(0.08), .white.opacity(0.03)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
                         )
                         .frame(width: 65, height: 65)
                     Circle()
                         .strokeBorder(
-                            isSelected ? category.color : .clear,
-                            lineWidth: 2
-                    )
+                            LinearGradient(
+                                colors: isSelected
+                                ? [category.color.opacity(0.8), category.color.opacity(0.2)]
+                                : [.white.opacity(0.2), .white.opacity(0.05)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1
+                        )
                         .frame(width: 65, height: 65)
+                    
                     Text(category.emoji)
                         .font(.system(size: 28))
+                        .shadow(
+                            color: isSelected ? category.color.opacity(0.5) : .clear,
+                            radius: 5
+                        )
                 }
+                
                 Text(category.rawValue)
                     .font(.caption)
                     .fontWeight(isSelected ? .bold : .regular)

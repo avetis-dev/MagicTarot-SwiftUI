@@ -70,20 +70,35 @@ struct OneCardView: View {
     }
     private var bottomSection: some View {
         VStack(spacing: 12) {
-            NavigationLink(destination: ReadingResultView()) {
-                HStack {
-                    Image(systemName: "sparkles")
-                    Text("Sprawdź znaczenie")
+            if vm.hasCard {
+                NavigationLink(
+                    destination: ReadingResultView(
+                        result: .oneCard(vm.card!)
+                    )
+                ){
+                    HStack {
+                        Image(systemName: "sparkles")
+                        Text("Sprawdź znaczenie")
+                    }
+                    .font(.headline)
+                    .foregroundStyle(vm.hasCard ? .black : .gray)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(vm.hasCard ? Color.yellow : Color.gray.opacity(0.3))
+                    .cornerRadius(15)
                 }
-                .font(.headline)
-                .foregroundStyle(vm.hasCard ? .black : .gray)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(vm.hasCard ? Color.yellow : Color.gray.opacity(0.3))
-                .cornerRadius(15)
-            }
-            .disabled(!vm.hasCard)
-            .animation(.easeInOut(duration: 0.3), value: vm.hasCard)
+                } else {
+                    HStack {
+                        Image(systemName: "sparkles")
+                        Text("Sprawdź znaczenie")
+                    }
+                    .font(.headline)
+                    .foregroundStyle(.gray)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(Color.gray.opacity(0.3))
+                    .cornerRadius(15)
+                }
             
             // New Card Button
             if vm.hasCard {

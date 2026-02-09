@@ -38,6 +38,7 @@ struct HomeView: View {
                         categoriesSection
                         spreadSection
                     }
+                    .padding(.horizontal, 20)
                 }
             }
         }
