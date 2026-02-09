@@ -1,91 +1,63 @@
-# 🔮 Magic Tarot App
-
 <div align="center">
-  <img src="https://img.shields.io/badge/Swift-5.9-F05138.svg?logo=swift&logoColor=white" />
-  <img src="https://img.shields.io/badge/SwiftUI-Framework-0071E3.svg?logo=apple&logoColor=white" />
-  <img src="https://img.shields.io/badge/iOS-17+-000000.svg?logo=apple&logoColor=white" />
-  <img src="https://img.shields.io/badge/Architecture-MVVM-blue.svg" />
-  <img src="https://img.shields.io/badge/Status-In%20Development-yellow.svg" />
-</div>
+
+# 🔮 Magic Tarot
+
+**Mystical tarot reading experience built with SwiftUI**
+
+[![iOS 17+](https://img.shields.io/badge/iOS-17%2B-blue.svg)](https://developer.apple.com/ios/)
+[![Swift 5.9](https://img.shields.io/badge/Swift-5.9-orange.svg)](https://developer.apple.com/swift/)
+[![SwiftUI](https://img.shields.io/badge/SwiftUI-100%25-0066CC.svg)](https://developer.apple.com/xcode/swiftui/)
 
 <br />
 
-<div align="center">
-  <h3>✨ A mystical tarot reading experience built entirely in SwiftUI ✨</h3>
-</div>
+https://github.com/user-attachments/assets/bef89439-44f1-4da9-9eeb-b612f28b33ed
+
 
 <br />
 
-> *"The cards don't predict the future — they help you create it."*
+### ✨ Live Demo
 
----
+![Magic Tarot Demo](https://github.com/user-attachments/assets/bef89439-44f1-4da9-9eeb-b612f28b33ed)
 
-## 📖 About
+<br />
 
-**Magic Tarot** is a beautifully designed iOS application that brings tarot 
-card readings to your iPhone. Built from scratch using **SwiftUI**, 
-the app features realistic card animations, multiple spread layouts, 
-and a carefully crafted mystical atmosphere.
+### 📸 Screenshots
 
-🎯 **Goal:** Publish on the App Store and demonstrate clean, modern iOS development skills.
+|--------|---------|---------|------------|--------------|
+| ![01](Screenshots/1.png) | ![02](2.png) | ![03](Screenshots/3.png) | ![04](Screenshots/4.png) | ![05](Screenshots/5.png) |
 
+<br />
 
----
+### 🚀 Features
 
-## 📱 Features
+- Pure SwiftUI (zero UIKit)
+- MVVM Architecture
+- Custom 3D card flip animations
+- Particle star background
+- Haptic feedback
+- Detailed card interpretations with typewriter effect
+- TabBar navigation
+- Dark mystic design
 
-### 🃏 Card Readings
-| Feature | Description |
-|---------|-------------|
-| **Card of the Day** | Pull a random tarot card with a realistic 3D flip animation |
-| **Three-Card Spread** | "Past / Present / Future" reading layout |
-| **Full Major Arcana** | All 22 Major Arcana cards with descriptions and unique colors |
+<br />
 
-### 🎨 Design & UI
-| Feature | Description |
-|---------|-------------|
-| **Mystical Atmosphere** | Dark gradient backgrounds with animated star particles |
-| **3D Card Flip** | Smooth `rotation3DEffect` animation for card reveals |
-| **Glass Morphism** | Modern `.ultraThinMaterial` effects on card placeholders |
-| **Responsive Layout** | Adaptive design using `ZStack`, `VStack`, `HStack` |
+### 🛠 Tech Stack
 
-### 🛠 Technical
-| Feature | Description |
-|---------|-------------|
-| **Pure SwiftUI** | No UIKit dependencies, 100% SwiftUI lifecycle |
-| **Clean Architecture** | Reusable components (`CardPlaceholder`, `StarsBackground`) |
-| **Smart Navigation** | `NavigationStack` + `sheet(item:)` with enum-based routing |
-| **Custom Data Model** | `Identifiable` TarotCard struct with type-safe properties |
+- Swift 5.9
+- SwiftUI
+- @Observable (Swift 5.9+)
+- No third-party dependencies
 
----
+<br />
 
-
-## 📸 Screenshots
-
-<div align="center">
-
-| Home Screen | Card Selection | Three-Card Spread |
-|:-----------:|:--------------:|:-----------------:|
-| <img src="Screenshots/spread_screen1.png" width="200"/> | <img src="Screenshots/spread_screen2.png" width="200"/> | <img src="Screenshots/spread_screen3.png" width="200"/> |
-
-</div>
-
----
-
-## 🚀 Roadmap (Next Steps)
-### Phase 1 — MVP ✅
-- [x] Card of the Day with 3D animation
-- [x] Three-Card Spread layout
-- [x] Full Major Arcana deck (22 cards)
-- [x] Mystical UI with gradients and stars
-
----
-
-## 👨‍💻 Author
+### 👨‍💻 Author
 
 **Avetis Davydov**  
-Aspiring iOS Developer based in Warsaw 🇵🇱  
-[LinkedIn](https://www.linkedin.com/in/avetis-davydov-0288253aa/) • [Portfolio](Soon)
+Junior iOS Developer | Warsaw, Poland 🇵🇱  
+From Hospitality → Tech (career changer)
 
----
-*Created as part of my journey from Hospitality to Tech.* 🚀
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)](https://linkedin.com/in/your-profile)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/yourusername)
+
+*Built with passion and lots of ☕ in 2025*
+</div>
