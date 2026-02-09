@@ -9,12 +9,7 @@ import SwiftUI
 
 struct OneCardView: View {
     
-    @State private var oneCard: TarotCard? = nil
-    @State private var showSheet = false
-    
-    private var hasCard: Bool {
-        oneCard != nil
-    }
+    @State private var vm = OneCardViewModel()
     
     var body: some View {
         NavigationStack {
@@ -30,8 +25,11 @@ struct OneCardView: View {
                     bottomSection
                 }
             }
-            .sheet(isPresented: $showSheet) {
-                CardSelectionView(cardToChange: $oneCard)
+            .sheet(isPresented: $vm.showSheet) {
+                CardSelectionView(cardToChange: Binding(
+                    get: {vm.card},
+                    set: {vm.card = $0}
+                ))
             }
         }
     }
@@ -51,11 +49,11 @@ struct OneCardView: View {
             
             HStack(spacing: 8) {
                 Circle()
-                    .fill(hasCard ? Color.yellow : Color.white.opacity(0.3))
+                    .fill(vm.hasCard ? Color.yellow : Color.white.opacity(0.3))
                     .frame(width: 8, height: 8)
-                    .animation(.spring(duration: 0.4), value: hasCard)
+                    .animation(.spring(duration: 0.4), value: vm.hasCard)
                 
-                Text(hasCard ? "1/1" : "0/1")
+                Text(vm.hasCard ? "1/1" : "0/1")
                     .font(.caption)
                     .foregroundStyle(.white.opacity(0.5))
             }
@@ -65,8 +63,8 @@ struct OneCardView: View {
     }
     
     private var cardSection: some View {
-        CardPlaceholder(title: "Co dziś Cię czeka?", emoji: "🧚‍♀️", card: oneCard) {
-            showSheet = true
+        CardPlaceholder(title: "Co dziś Cię czeka?", emoji: "🧚‍♀️", card: vm.card) {
+            vm.selectedCard()
         }
         .frame(width: 200)
     }
@@ -78,20 +76,20 @@ struct OneCardView: View {
                     Text("Sprawdź znaczenie")
                 }
                 .font(.headline)
-                .foregroundStyle(hasCard ? .black : .gray)
+                .foregroundStyle(vm.hasCard ? .black : .gray)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
-                .background(hasCard ? Color.yellow : Color.gray.opacity(0.3))
+                .background(vm.hasCard ? Color.yellow : Color.gray.opacity(0.3))
                 .cornerRadius(15)
             }
-            .disabled(!hasCard)
-            .animation(.easeInOut(duration: 0.3), value: hasCard)
+            .disabled(!vm.hasCard)
+            .animation(.easeInOut(duration: 0.3), value: vm.hasCard)
             
             // New Card Button
-            if hasCard {
+            if vm.hasCard {
                 Button {
                     withAnimation(.spring(duration: 0.5)) {
-                        oneCard = nil
+                        vm.resetCard()
                     }
                     hapticFeedback()
                 } label: {
