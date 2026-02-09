@@ -2,52 +2,70 @@
 
 # 🔮 Magic Tarot
 
-**Mystical tarot reading experience · Pure SwiftUI**
-
-<a href="https://github.com/AvetisDav/MagicTarot">
-  <img src="https://github.com/user-attachments/assets/bef89439-44f1-4da9-9eeb-b612f28b33ed" alt="Magic Tarot Demo" />
-</a>
-
-<br /><br />
-
-<img src="https://img.shields.io/badge/iOS-17%2B-blue.svg" alt="iOS 17+" />
-<img src="https://img.shields.io/badge/Swift-5.9-orange.svg" alt="Swift 5.9" />
-<img src="https://img.shields.io/badge/SwiftUI-100%25-0066CC.svg" alt="SwiftUI" />
-<img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License" />
-
-<br /><br />
-
-### Screenshots
-
-<img src="Screenshots/1.png" width="180" /> <img src="Screenshots/2.png" width="180" /> <img src="Screenshots/3.png" width="180" /> <img src="Screenshots/4.png" width="180" /> <img src="Screenshots/5.png" width="180" />
-
-<br /><br />
-
-### Features
-
-- 100% SwiftUI (zero UIKit)
-- MVVM + @Observable
-- 3D card flip animations
-- Animated star particles background
-- Typewriter-style interpretation text
-- Haptic feedback
-- TabBar navigation
-- Dark mystic design
+**Mystical tarot reading app built entirely in SwiftUI**
 
 <br />
 
-**Tech Stack**  
-Swift 5.9 · SwiftUI · No third-party dependencies
+<img src="https://img.shields.io/badge/Swift-5.9-F05138?style=for-the-badge&logo=swift&logoColor=white" />
+<img src="https://img.shields.io/badge/SwiftUI-100%25-0066CC?style=for-the-badge&logo=swift&logoColor=white" />
+<img src="https://img.shields.io/badge/iOS-17%2B-000000?style=for-the-badge&logo=apple&logoColor=white" />
+<img src="https://img.shields.io/badge/Arch-MVVM-007ACC?style=for-the-badge" />
+
+<br /><br />
+
+<img src="demo.gif" width="300" alt="Magic Tarot Demo" />
 
 <br />
 
-**Avetis Davydov**  
-Junior iOS Developer · Warsaw, Poland  
-Career changer: Hospitality → Tech
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/avetis-davydov-0288253aa/)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/AvetisDav)
-
-*Built with passion in 2025 ☕*
+*☝️ Живая демонстрация приложения*
 
 </div>
+
+---
+
+## 📸 Screenshots
+
+<div align="center">
+
+| Home | Spread | Card Selection | Interpretation | Result |
+|:-------:|:-------:|:-----------:|:-------------:|:---------:|
+| <img src="Screenshots/1.png" width="160" /> | <img src="Screenshots/2.png" width="160" /> | <img src="Screenshots/3.png" width="160" /> | <img src="Screenshots/4.png" width="160" /> | <img src="Screenshots/5.png" width="160" /> |
+
+</div>
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| 🃏 **Card of the Day** | Daily tarot card with mystic banner |
+| 🔮 **Three-Card Spread** | Past · Present · Future reading |
+| 📜 **Interpretations** | Detailed meanings with typewriter animation |
+| 🌟 **Star Background** | Animated particle effects |
+| 📳 **Haptic Feedback** | Vibration on every interaction |
+| 💎 **Luxury UI** | Glass morphism + gradient categories |
+| 🏗 **Clean Architecture** | MVVM with `@Observable` |
+| 📦 **Zero Dependencies** | No third-party libraries |
+
+---
+
+## 🚀 Roadmap
+
+- [x] Card of the Day
+- [x] Three-Card Spread
+- [x] Card interpretations with typewriter effect
+- [x] MVVM Architecture
+- [x] TabBar navigation
+- [ ] Save reading history (SwiftData)
+- [ ] More spread types (Celtic Cross, Love)
+- [ ] AI interpretations (OpenAI)
+- [ ] App Store release
+- [ ] Premium subscription (StoreKit 2)
+
+---
+
+## ⚙️ Run Locally
+
+```bash
+git clone https://github.com/AvetisDav/MagicTarot.git
