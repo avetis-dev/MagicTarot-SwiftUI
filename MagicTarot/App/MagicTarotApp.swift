@@ -1,11 +1,8 @@
-//
-//  MagicTarotApp.swift
-//  MagicTarot
-//
-//  Created by Avetis Davydov on 04/02/2026.
-//
+
 
 import SwiftUI
+import SwiftData
+
 
 @main
 struct MagicTarotApp: App {
@@ -13,5 +10,6 @@ struct MagicTarotApp: App {
         WindowGroup {
             MainTabView()
         }
+        .modelContainer(for: SavedReading.self)
     }
 }

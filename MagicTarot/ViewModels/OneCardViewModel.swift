@@ -1,4 +1,6 @@
 import SwiftUI
+import SwiftData
+
 
 @Observable
 class OneCardViewModel {
@@ -13,6 +15,7 @@ class OneCardViewModel {
     var aiInterpretation: String = ""
     var isLoadingAI = false
     var aiError: String? = nil
+    var isSaved = false
     
     private let geminiService = GeminiService()
     
@@ -26,6 +29,18 @@ class OneCardViewModel {
     }
     
     // MARK: - Methods
+    
+    func saveReading(context: ModelContext) {
+            guard let card = card, hasInterpretation else { return }
+            
+            let reading = SavedReading.fromOneCard(
+                card: card,
+                interpretation: aiInterpretation
+            )
+            context.insert(reading)
+            isSaved = true
+            hapticFeedback()
+        }
     
     /// Показать инструкцию
     func showInstructionSheet() {

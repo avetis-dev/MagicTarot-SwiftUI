@@ -107,7 +107,7 @@ struct HomeView: View {
         case "Trzy Karty":
             ThreeCardsView()
         case "Rozkład Miłosny":
-            ThreeCardsView()
+            LoveSpreadView()
         default:
             ThreeCardsView()
         }

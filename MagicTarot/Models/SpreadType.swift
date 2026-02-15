@@ -83,7 +83,7 @@ let allSpreads: [SpreadType] = [
         subtitle: "Odkryj swoją prawdziwą naturę",
         gradientColors: [.purple, .indigo],
         category: .personality,
-        isAvailable: true
+        isAvailable: false
     ),
     
     // Карьера

@@ -1,9 +1,8 @@
 import SwiftUI
 
-struct ThreeCardsView: View {
+struct LoveSpreadView: View {
     
-    @Environment(\.modelContext) private var modelContext
-    @State private var vm = ThreeCardsViewModel()
+    @State private var vm = LoveSpreadViewModel()
     
     var body: some View {
         NavigationStack {
@@ -36,13 +35,11 @@ struct ThreeCardsView: View {
                     .padding(.bottom, 40)
                 }
             }
-            // Инструкция
             .sheet(isPresented: $vm.showInstruction) {
-                InstructionSheet(spreadInfo: SpreadInfoLibrary.threeCards) {
+                InstructionSheet(spreadInfo: SpreadInfoLibrary.loveSpread) {
                     vm.startReading()
                 }
             }
-            // Выбор карты
             .sheet(item: $vm.activePosition) { position in
                 CardSelectionView(
                     cardToChange: vm.bindingForPosition(position)
@@ -54,10 +51,10 @@ struct ThreeCardsView: View {
     // MARK: - Header
     private var headerSection: some View {
         VStack(spacing: 8) {
-            Text("🔮")
+            Text("💕")
                 .font(.system(size: 40))
             
-            Text("Rozkład: Trzy Karty")
+            Text("Rozkład Miłosny")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundStyle(.white)
@@ -68,13 +65,13 @@ struct ThreeCardsView: View {
             
             if vm.isReadingStarted {
                 HStack(spacing: 8) {
-                    ForEach(0..<3, id: \.self) { index in
+                    ForEach(0..<5, id: \.self) { index in
                         Circle()
-                            .fill(index < vm.selectedCount ? Color.yellow : Color.white.opacity(0.3))
+                            .fill(index < vm.selectedCount ? Color.pink : Color.white.opacity(0.3))
                             .frame(width: 8, height: 8)
                             .animation(.spring(duration: 0.4), value: vm.selectedCount)
                     }
-                    Text("\(vm.selectedCount)/3")
+                    Text("\(vm.selectedCount)/5")
                         .font(.caption)
                         .foregroundStyle(.white.opacity(0.5))
                 }
@@ -86,15 +83,13 @@ struct ThreeCardsView: View {
     
     private var headerSubtitle: String {
         if !vm.isReadingStarted {
-            return "Poznaj przeszłość, teraźniejszość i przyszłość"
+            return "Odkryj tajemnice Waszej relacji"
         } else if vm.hasInterpretation {
-            return "Twój rozkład jest gotowy"
-        } else if vm.isLoadingAI {
-            return "Analizuję Twoje karty..."
+            return "Twój rozkład miłosny jest gotowy"
         } else if vm.allCardsSelected {
             return "Wszystkie karty wybrane!"
         } else {
-            return "Wybierz \(3 - vm.selectedCount) kart"
+            return "Wybierz \(5 - vm.selectedCount) kart"
         }
     }
     
@@ -103,32 +98,24 @@ struct ThreeCardsView: View {
         VStack(spacing: 20) {
             Spacer().frame(height: 40)
             
-            // Три карты заглушки
-            HStack(spacing: 12) {
-                ForEach(["⏪", "✨", "⏩"], id: \.self) { emoji in
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(.ultraThinMaterial)
-                            .aspectRatio(2/3, contentMode: .fit)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .strokeBorder(
-                                        .white.opacity(0.2),
-                                        style: StrokeStyle(lineWidth: 2, dash: [8, 5])
-                                    )
-                            )
-                        
-                        VStack(spacing: 8) {
-                            Text(emoji)
-                                .font(.title2)
-                            Text("?")
-                                .font(.title3)
-                                .foregroundStyle(.white.opacity(0.3))
-                        }
-                    }
-                }
+            // Красивая иллюстрация
+            ZStack {
+                Circle()
+                    .fill(.pink.opacity(0.1))
+                    .frame(width: 150, height: 150)
+                
+                Circle()
+                    .strokeBorder(.pink.opacity(0.2), lineWidth: 2)
+                    .frame(width: 150, height: 150)
+                
+                Text("💕")
+                    .font(.system(size: 60))
             }
-            .padding(.horizontal, 40)
+            
+            Text("Pomyśl o osobie, którą kochasz\nlub o relacji, która Cię nurtuje")
+                .font(.subheadline)
+                .foregroundStyle(.white.opacity(0.6))
+                .multilineTextAlignment(.center)
             
             Button {
                 vm.showInstructionSheet()
@@ -141,36 +128,49 @@ struct ThreeCardsView: View {
                 .foregroundStyle(.black)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
-                .background(Color.yellow)
+                .background(Color.pink)
                 .cornerRadius(15)
             }
             .padding(.horizontal, 40)
         }
     }
     
-    // MARK: - Cards
+    // MARK: - Cards (5 карт в 2 ряда)
     private var cardsSection: some View {
-        HStack(spacing: 12) {
-            CardPlaceholder(title: "Przeszłość", emoji: "⏪", card: vm.pastCard) {
-                vm.selectPosition(.past)
+        VStack(spacing: 12) {
+            // Первый ряд: 3 карты
+            HStack(spacing: 10) {
+                CardPlaceholder(title: "Twoje uczucia", emoji: "💖", card: vm.yourFeelings) {
+                    vm.selectPosition(.yourFeelings)
+                }
+                CardPlaceholder(title: "Połączenie", emoji: "🔗", card: vm.connection) {
+                    vm.selectPosition(.connection)
+                }
+                CardPlaceholder(title: "Uczucia partnera", emoji: "💙", card: vm.partnerFeelings) {
+                    vm.selectPosition(.partnerFeelings)
+                }
             }
-            CardPlaceholder(title: "Teraźniejszość", emoji: "✨", card: vm.presentCard) {
-                vm.selectPosition(.present)
+            
+            // Второй ряд: 2 карты
+            HStack(spacing: 10) {
+                CardPlaceholder(title: "Przeszkoda", emoji: "🚧", card: vm.obstacle) {
+                    vm.selectPosition(.obstacle)
+                }
+                CardPlaceholder(title: "Przyszłość", emoji: "🌅", card: vm.futureTogether) {
+                    vm.selectPosition(.futureTogether)
+                }
             }
-            CardPlaceholder(title: "Przyszłość", emoji: "⏩", card: vm.futureCard) {
-                vm.selectPosition(.future)
-            }
+            .padding(.horizontal, 40)
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 20)
     }
     
     // MARK: - Result
     private var resultSection: some View {
         VStack(spacing: 16) {
-            // Разделитель
             HStack(spacing: 12) {
                 Rectangle().fill(.white.opacity(0.1)).frame(height: 1)
-                Text("AI Interpretacja")
+                Text("AI Interpretacja Miłosna")
                     .font(.caption)
                     .fontWeight(.semibold)
                     .foregroundStyle(.white.opacity(0.4))
@@ -178,54 +178,11 @@ struct ThreeCardsView: View {
             }
             .padding(.horizontal, 20)
             
-            // Мини карты
-            miniCardsRow
-            
-            // AI интерпретация
             AIInterpretationView(
                 text: vm.aiInterpretation,
-                cardColor: .purple
+                cardColor: .pink
             )
             .padding(.horizontal, 20)
-            if vm.hasInterpretation {
-                SaveReadingButton(isSaved: vm.isSaved) {
-                    vm.saveReading(context: modelContext)
-                }
-            }
-        }
-    }
-    
-    // MARK: - Mini Cards
-    private var miniCardsRow: some View {
-        HStack(spacing: 20) {
-            if let past = vm.pastCard {
-                miniCard(card: past, emoji: "⏪", label: "Przeszłość")
-            }
-            if let present = vm.presentCard {
-                miniCard(card: present, emoji: "✨", label: "Teraźniejszość")
-            }
-            if let future = vm.futureCard {
-                miniCard(card: future, emoji: "⏩", label: "Przyszłość")
-            }
-        }
-    }
-    
-    private func miniCard(card: TarotCard, emoji: String, label: String) -> some View {
-        VStack(spacing: 6) {
-            Image(card.image)
-                .resizable()
-                .aspectRatio(2/3, contentMode: .fit)
-                .frame(width: 55)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .shadow(color: card.color.opacity(0.4), radius: 5)
-            
-            Text(emoji)
-                .font(.caption2)
-            
-            Text(card.name)
-                .font(.caption2)
-                .foregroundStyle(.white.opacity(0.6))
-                .lineLimit(1)
         }
     }
     
@@ -233,7 +190,6 @@ struct ThreeCardsView: View {
     private func errorSection(error: String) -> some View {
         VStack(spacing: 12) {
             Text("😔").font(.system(size: 30))
-            
             Text(error)
                 .font(.subheadline)
                 .foregroundStyle(.white.opacity(0.6))
@@ -247,10 +203,10 @@ struct ThreeCardsView: View {
                     Text("Spróbuj ponownie")
                 }
                 .font(.subheadline)
-                .foregroundStyle(.yellow)
+                .foregroundStyle(.pink)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
-                .background(.yellow.opacity(0.15))
+                .background(.pink.opacity(0.15))
                 .clipShape(Capsule())
             }
         }
@@ -263,27 +219,26 @@ struct ThreeCardsView: View {
     // MARK: - Bottom
     private var bottomSection: some View {
         VStack(spacing: 12) {
-            // Кнопка "Получить толкование"
             if vm.allCardsSelected && !vm.hasInterpretation && !vm.isLoadingAI {
                 Button {
                     Task { await vm.getAIReading() }
                 } label: {
                     HStack {
-                        Image(systemName: "sparkles")
-                        Text("Sprawdź rozkład")
+                        Image(systemName: "heart.fill")
+                        Text("Sprawdź rozkład miłosny")
                     }
                     .font(.headline)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
-                    .background(Color.yellow)
+                    .background(Color.pink)
                     .cornerRadius(15)
                 }
                 .padding(.horizontal, 40)
             } else if !vm.allCardsSelected && vm.isReadingStarted {
                 HStack {
-                    Image(systemName: "sparkles")
-                    Text("Sprawdź rozkład")
+                    Image(systemName: "heart.fill")
+                    Text("Sprawdź rozkład miłosny")
                 }
                 .font(.headline)
                 .foregroundStyle(.gray)
@@ -294,7 +249,6 @@ struct ThreeCardsView: View {
                 .padding(.horizontal, 40)
             }
             
-            // Кнопка сброса
             if vm.hasAnyCard {
                 Button {
                     withAnimation(.spring(duration: 0.5)) {
@@ -317,5 +271,5 @@ struct ThreeCardsView: View {
 }
 
 #Preview {
-    ThreeCardsView()
+    LoveSpreadView()
 }

@@ -1,8 +1,11 @@
 import SwiftUI
+import SwiftData
+
 
 struct OneCardView: View {
     
     @State private var vm = OneCardViewModel()
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         NavigationStack {
@@ -31,7 +34,7 @@ struct OneCardView: View {
             }
             // Инструкция
             .sheet(isPresented: $vm.showInstruction) {
-                InstructionSheet {
+                InstructionSheet(spreadInfo: SpreadInfoLibrary.oneCard) {
                     vm.startReading()
                 }
             }
@@ -225,7 +228,11 @@ struct OneCardView: View {
                         text: vm.aiInterpretation,
                         cardColor: card.color
                     )
+                    SaveReadingButton(isSaved: vm.isSaved) {
+                        vm.saveReading(context: modelContext)
+                    }
                 }
+                
                 
                 // Кнопка сброса
                 Button {
@@ -241,6 +248,7 @@ struct OneCardView: View {
                     .foregroundStyle(.white.opacity(0.6))
                 }
                 .padding(.top, 10)
+
             }
         }
     }

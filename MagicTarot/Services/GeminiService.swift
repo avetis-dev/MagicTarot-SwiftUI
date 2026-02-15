@@ -3,11 +3,10 @@ import Foundation
 class GeminiService {
     
     private let apiKey = Secrets.geminiAPIKey
-    private let model = "gemini-3-flash-preview"
     
-    private var baseURL: String {
-        "https://generativelanguage.googleapis.com/v1beta/models/\(model):generateContent"
-    }
+    private let models = [
+        "gemini-3-flash-preview"
+    ]
     
     // MARK: - Одна карта
     func getOneCardReading(card: TarotCard) async throws -> String {
@@ -25,12 +24,11 @@ class GeminiService {
         4. ⚠️ NA CO UWAŻAĆ — ostrzeżenie (1-2 zdania)
         5. ✨ AFIRMACJA DNIA — jedna afirmacja
         
-        Pisz po polsku. Bądź ciepły i konkretny.
+        Pisz po polsku. Bądź ciepły i konkretny. Mów do osoby (Ty/Ciebie).
         NIE używaj formatowania Markdown (bez ** ani ##).
-        Używaj TYLKO emoji na początku sekcji jako nagłówki.
         """
         
-        return try await sendRequest(prompt: prompt)
+        return try await sendWithFallback(prompt: prompt)
     }
     
     // MARK: - Три карты
@@ -48,7 +46,6 @@ class GeminiService {
         - Przyszłość: \(future.name) — \(future.description)
         
         Przygotuj interpretację:
-        
         1. 🌟 OGÓLNE PRZESŁANIE (2-3 zdania)
         2. ⏪ PRZESZŁOŚĆ — \(past.name) (3-4 zdania)
         3. ✨ TERAŹNIEJSZOŚĆ — \(present.name) (3-4 zdania)
@@ -58,103 +55,127 @@ class GeminiService {
         7. ✨ AFIRMACJA
         
         Pisz po polsku. Bądź ciepły i konkretny.
+        NIE używaj formatowania Markdown (bez ** ani ##).
         """
         
-        return try await sendRequest(prompt: prompt)
+        return try await sendWithFallback(prompt: prompt)
     }
     
-    // MARK: - Send Request (с подробным логированием!)
-    private func sendRequest(prompt: String) async throws -> String {
+    // MARK: - Расклад на любовь
+    func getLoveReading(
+        yourFeelings: TarotCard,
+        partnerFeelings: TarotCard,
+        connection: TarotCard,
+        obstacle: TarotCard,
+        futureTogether: TarotCard
+    ) async throws -> String {
+        let prompt = """
+        Jesteś doświadczonym mistrzem tarota specjalizującym się w rozkładach miłosnych.
         
+        Klient wykonał rozkład miłosny na 5 kart:
+        1. 💖 Uczucia klienta: \(yourFeelings.name) — \(yourFeelings.description)
+        2. 💙 Uczucia partnera: \(partnerFeelings.name) — \(partnerFeelings.description)
+        3. 🔗 Połączenie: \(connection.name) — \(connection.description)
+        4. 🚧 Przeszkoda: \(obstacle.name) — \(obstacle.description)
+        5. 🌅 Przyszłość razem: \(futureTogether.name) — \(futureTogether.description)
+        
+        Przygotuj głęboką interpretację miłosną:
+        1. 💕 ENERGIA RELACJI (2-3 zdania)
+        2. 💖 TWOJE UCZUCIA — \(yourFeelings.name) (3-4 zdania)
+        3. 💙 UCZUCIA PARTNERA — \(partnerFeelings.name) (3-4 zdania)
+        4. 🔗 WASZE POŁĄCZENIE — \(connection.name) (2-3 zdania)
+        5. 🚧 PRZESZKODA — \(obstacle.name) (3-4 zdania)
+        6. 🌅 PRZYSZŁOŚĆ RAZEM — \(futureTogether.name) (3-4 zdania)
+        7. 💡 RADA DLA SERCA (2-3 zdania)
+        8. ✨ AFIRMACJA MIŁOSNA
+        
+        Pisz po polsku. Bądź ciepły i romantyczny.
+        NIE używaj formatowania Markdown (bez ** ani ##).
+        """
+        
+        return try await sendWithFallback(prompt: prompt)
+    }
+    
+    // MARK: - Отправка с fallback
+    private func sendWithFallback(prompt: String) async throws -> String {
+        var lastError: Error = GeminiError.serverError
+        
+        for model in models {
+            do {
+                print("🔄 [Gemini] Trying model: \(model)")
+                let result = try await sendRequest(prompt: prompt, model: model)
+                print("✅ [Gemini] Success with model: \(model)")
+                return result
+            } catch {
+                print("⚠️ [Gemini] Model \(model) failed: \(error.localizedDescription)")
+                lastError = error
+                try? await Task.sleep(for: .seconds(1))
+                continue
+            }
+        }
+        
+        throw lastError
+    }
+    
+    // MARK: - Send Request
+    private func sendRequest(prompt: String, model: String) async throws -> String {
+        let baseURL = "https://generativelanguage.googleapis.com/v1beta/models/\(model):generateContent"
         let fullURL = "\(baseURL)?key=\(apiKey)"
         
-        // 📋 Лог 1: URL
-        print("🌐 [Gemini] URL: \(baseURL)")
-        print("🔑 [Gemini] API Key: \(apiKey.prefix(10))...")
-        
         guard let url = URL(string: fullURL) else {
-            print("❌ [Gemini] Invalid URL!")
             throw GeminiError.invalidURL
         }
         
-        // Тело запроса
         let body: [String: Any] = [
             "contents": [
-                [
-                    "parts": [
-                        ["text": prompt]
-                    ]
-                ]
+                ["parts": [["text": prompt]]]
             ],
             "generationConfig": [
                 "temperature": 0.9,
-                "maxOutputTokens": 2048
+                "maxOutputTokens": 4096
             ]
         ]
         
         let jsonData = try JSONSerialization.data(withJSONObject: body)
         
-        // 📋 Лог 2: Тело запроса
-        if let jsonString = String(data: jsonData, encoding: .utf8) {
-            print("📤 [Gemini] Request body: \(jsonString.prefix(200))...")
-        }
-        
-        // Настройка запроса
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = jsonData
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 30
         
-        // Отправка
-        print("⏳ [Gemini] Sending request...")
-        
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        // 📋 Лог 3: Ответ сервера
-        if let httpResponse = response as? HTTPURLResponse {
-            print("📥 [Gemini] Status code: \(httpResponse.statusCode)")
-        }
-        
-        // 📋 Лог 4: Тело ответа (САМОЕ ВАЖНОЕ!)
-        if let responseString = String(data: data, encoding: .utf8) {
-            print("📥 [Gemini] Response body: \(responseString)")
-        }
-        
-        // Проверка статуса
         guard let httpResponse = response as? HTTPURLResponse else {
-            print("❌ [Gemini] No HTTP response!")
             throw GeminiError.serverError
         }
         
-        // Если ошибка — парсим текст ошибки
+        print("📥 [Gemini] \(model) → Status: \(httpResponse.statusCode)")
+        
         if httpResponse.statusCode != 200 {
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("📥 [Gemini] Response: \(responseString.prefix(300))")
+            }
             if let errorJSON = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                let error = errorJSON["error"] as? [String: Any],
                let message = error["message"] as? String {
-                print("❌ [Gemini] Error: \(message)")
                 throw GeminiError.custom(message)
             }
-            print("❌ [Gemini] HTTP Error: \(httpResponse.statusCode)")
             throw GeminiError.serverError
         }
         
-        // Парсинг ответа
         guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
               let candidates = json["candidates"] as? [[String: Any]],
               let content = candidates.first?["content"] as? [String: Any],
               let parts = content["parts"] as? [[String: Any]],
               let text = parts.first?["text"] as? String else {
-            print("❌ [Gemini] Failed to parse response!")
             throw GeminiError.parsingError
         }
         
-        print("✅ [Gemini] Success! Response length: \(text.count) chars")
         return text
     }
 }
 
-// MARK: - Errors
 enum GeminiError: LocalizedError {
     case invalidURL
     case serverError
@@ -164,7 +185,7 @@ enum GeminiError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:       return "Nieprawidłowy URL"
-        case .serverError:      return "Błąd serwera. Spróbuj ponownie."
+        case .serverError:      return "Serwer jest przeciążony. Spróbuj za chwilę."
         case .parsingError:     return "Nie udało się odczytać odpowiedzi."
         case .custom(let msg):  return msg
         }
